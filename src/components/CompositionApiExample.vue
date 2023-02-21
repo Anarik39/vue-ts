@@ -27,16 +27,18 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from "vue";
 import type Job from "@/types/Job";
 import type OrderTerm from "@/types/OrderTerm";
 import { computed, ref, toRefs } from "vue";
 
-const props = defineProps({
-  jobs: {
-    type: Array as PropType<Job[]>, // чтобы определить детальный тип для пропса, необходимо использовать PropType
-    required: true,
-  },
+interface Props {
+  jobs?: Job[]; // делаем не обяз проп
+}
+
+/* const props = defineProps<Props>(); */ // без объявления дефолтных значений
+
+const props = withDefaults(defineProps<Props>(), {
+  jobs: () => [],
 });
 
 const order = ref<OrderTerm>("title");
